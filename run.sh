@@ -10,6 +10,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
+MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Function to print colored output
@@ -36,6 +37,47 @@ print_header() {
     echo -e "${CYAN}═══════════════════════════════════════════════════════${NC}"
     echo ""
 }
+
+print_menu() {
+    echo ""
+    echo -e "${MAGENTA}┌─────────────────────────────────────────────────────┐${NC}"
+    echo -e "${MAGENTA}│            SELECT RUNNING MODE                    │${NC}"
+    echo -e "${MAGENTA}├─────────────────────────────────────────────────────┤${NC}"
+    echo -e "${MAGENTA}│  ${GREEN}1${NC}) Run from Cloud (refer to owner for URL)        │${NC}"
+    echo -e "${MAGENTA}│  ${GREEN}2${NC}) Run from Local (with database checks)           │${NC}"
+    echo -e "${MAGENTA}└─────────────────────────────────────────────────────┘${NC}"
+    echo ""
+}
+
+# ============================================
+# 0. SELECT RUNNING MODE
+# ============================================
+print_header "Welcome to Bedtime Story App"
+
+print_menu
+read -p "Please select an option (1 or 2): " RUN_MODE
+
+# Validate input
+while [[ "$RUN_MODE" != "1" && "$RUN_MODE" != "2" ]]; do
+    print_error "Invalid selection. Please enter 1 or 2."
+    read -p "Please select an option (1 or 2): " RUN_MODE
+done
+
+if [ "$RUN_MODE" = "1" ]; then
+    print_header "Cloud Mode Selected"
+    print_info "Running from Cloud (refer to owner for URL)"
+    print_info "No local database checks will be performed."
+    echo ""
+    print_info "To run the app from cloud:"
+    echo "  - Contact the project owner for the cloud URL"
+    echo "  - Or check the deployment documentation"
+    echo ""
+    print_success "Script completed in Cloud mode!"
+    exit 0
+fi
+
+print_success "Local Mode Selected"
+print_info "Running local setup with database checks..."
 
 # ============================================
 # 1. LOAD ENVIRONMENT VARIABLES
@@ -64,7 +106,7 @@ print_success "DATABASE_URL loaded"
 # ============================================
 print_header "Checking PostgreSQL Connection"
 
-# Extract host and port from DATABASE_URL
+# Extract host, port, user, and password from DATABASE_URL
 DB_HOST=$(echo $DATABASE_URL | sed -n 's/.*@\([^:]*\):.*/\1/p')
 DB_PORT=$(echo $DATABASE_URL | sed -n 's/.*:\([0-9]*\)\/.*/\1/p')
 DB_USER=$(echo $DATABASE_URL | sed -n 's/.*\/\/\([^:]*\):.*/\1/p')

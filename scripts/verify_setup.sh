@@ -57,4 +57,4 @@ curl -s http://localhost:11434/api/tags | grep -q '"name":"llama3.2' \
 ok "Model llama3.2 available"
 
 echo
-echo "All checks passed. You're ready for Module 1."
+echo "All checks passed. You're ready to go with the local database PostgresSQL."

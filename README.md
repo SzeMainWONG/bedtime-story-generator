@@ -29,15 +29,9 @@ A child-safety-aware bedtime story generator. A parent enters their child's name
 Requires Python 3.11+, Postgres, and a free Google AI Studio API key (<https://aistudio.google.com/apikey>).
 
 ```bash
-# 1. Run startup environment setup and checks
+# Run startup environment setup and checks
 chmod +x run.sh     #required only the first time
 ./run.sh
 
-# 2. Check that 
-
-# 3. Run two terminals (the deploy split mirrors local dev):
-# Terminal 1 — backend on :8000
+# Option FastAPI server on :8000
 uvicorn app.main:app --reload
-
-# Terminal 2 — frontend on :5173
-python -m http.server 5173 --directory frontend
